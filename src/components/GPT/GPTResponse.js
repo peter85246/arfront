@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import styles from "../../scss/gpt.module.scss"; // 引入樣式文件
+import { createElement } from "react";
+import { Link } from "react-router-dom"; // 若使用 React Router，或改用標準的 <a> 標籤
+
 import Button from "@mui/material/Button";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import DownloadIcon from "@mui/icons-material/CloudDownload";
@@ -119,6 +122,7 @@ const GPTResponse = ({
       console.error("無法接收的文字訊息，下載失敗!");
     }
   };
+
 
   useEffect(() => {
     if (elements) {
@@ -264,13 +268,14 @@ const GPTResponse = ({
         {/* 只有當 question 非空時顯示 "發問：" */}
         {question && <p>發問：{question.split("並加上圖片說明")[0]}</p>}
       </div>
-
+      
+      <div className={styles["gpt-response"]} ref={responseAreaRef}>
       <div
         style={{
           display: "flex",
           justifyContent: "flex-end",
           width: "100%",
-          margin: "-5px 0px 5px 0px",
+          marginRight: "-5px",
         }}
       >
         <Button
@@ -305,7 +310,6 @@ const GPTResponse = ({
           }}
         ></Button>
       </div>
-      <div className={styles["gpt-response"]} ref={responseAreaRef}>
         {!isLoading && <p className={styles["gptContent"]}></p>}
         {/* {isLoading && <LoadingIndicator />} */}
 
